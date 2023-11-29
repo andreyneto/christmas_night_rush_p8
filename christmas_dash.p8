@@ -9,16 +9,16 @@ function _init()
 
 	game_state = START_SCREEN
 
-	gravity = 10
+	gravity = 6
 	jump_time = 7
-	jump_strenght_pulse = -18
+	jump_strenght_pulse = -10
 	jump_strenght_long = -1
 	ground = {}
 	ground.y = 96
 
 	roofs = {}
-	roof1 = {x = 0, y = 80, w = 127}
-	roof2 = {x = 0, y = 56, w = 127}
+	roof1 = {x = 0, y = 76, w = 127}
+	roof2 = {x = 0, y = 44, w = 127}
 	add(roofs, roof1)
 	add(roofs, roof2)
 
@@ -31,12 +31,13 @@ function _init()
 	player.is_jumping = false
 	player.is_running = false
 	player.on_ground = true
+	player.on_roof = false
 
 	player.update = function()
 		parse_jump(player)
 	end
 	player.draw = function()
-		rectfill(player.x, player.y, player.x + 8, player.y + 8, 8)
+		rectfill(player.x-8, player.y-8, player.x + 8, player.y + 8, 8)
 	--   spr(0, player.x, player.y, 1,1)
 	end
 end
@@ -83,11 +84,13 @@ function draw_roofs()
 end
 
 function parse_jump(actor)
+	if (btn(3)) then actor.y += 2 end
 	if (btn(2) and actor.on_ground and not player.is_jumping)
 	then
 		sfx(0)
 		actor.jump_strenght = jump_strenght_pulse
 		actor.on_ground = false
+		actor.on_roof = false  -- Reinicia o estado ao pular
 	elseif (actor.is_jumping and actor.jump_time > 0 and not actor.on_ground)
 	then
 		actor.jump_strenght += jump_strenght_long
@@ -112,6 +115,16 @@ function parse_jump(actor)
 		actor.y = ground.y
 		actor.on_ground = true
 		actor.jump_time = jump_time
+		actor.on_roof = false  -- Reseta o estado ao aterrissar
+	end
+	for _, roof in pairs(roofs) do
+        check_roof_collision(actor, roof)
+    end
+
+	-- Adiciona a verificação para estar em um telhado
+	if (actor.on_roof and actor.vertical_speed < 0) then
+		actor.vertical_speed = 0
+		actor.y = actor.y + 1
 	end
 
 	if (actor.jump_strenght > -2)
@@ -130,6 +143,16 @@ function parse_jump(actor)
 
 		end
 	end
+end
+
+function check_roof_collision(actor, roof)
+    if actor.x < roof.x + roof.w and actor.x + 8 > roof.x and actor.y + 8 > roof.y and actor.y < roof.y then
+        actor.y = roof.y - 8
+        actor.vertical_speed = 0
+        actor.on_ground = true
+        actor.jump_time = jump_time
+        sfx(1)  -- Play a sound when landing on the roof
+    end
 end
 
 function update_game_screen()
