@@ -17,8 +17,8 @@ background=class:extend({
         0b1111110111110111,
         0b1111111111110111
     },
-    gradsteps={0,42,93,127},
-    gradpal={0,1,2,3},
+    gradsteps={8,64,96,104,127},
+    gradpal={0,1,2,3,4},
     update=function(_ENV)
         i=2
         i2=1
@@ -40,9 +40,9 @@ background=class:extend({
         end
     end,
     draw=function(_ENV)
-        for i=1,#gradpal do
-        pal(i-1, gradpal[i])
-        end
+        -- for i=1,#gradpal do
+        -- pal(i-1, gradpal[i])
+        -- end
         for y=0,127 do
         fillp(gradient[y+1][1])
         line(0,y,127,y,gradient[y+1][2])
