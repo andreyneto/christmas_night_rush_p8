@@ -5,6 +5,9 @@ heart_count=50
 -- globals
 score=0
 timer=0
+speed=1
+gravity=0.1
+friction=0.99
 
 -- game loop
 function _init()
