@@ -1,6 +1,6 @@
 santa=entity:extend({
-	x=30,
-	y=50,
+	x=16,
+	y=64,
 	w=12,
 	h=16,
 	f=false,
@@ -19,16 +19,86 @@ santa=entity:extend({
 	sliding=false,
 	landed=true,
 
+	jump_time = 7,
+	jump_strenght=0,
+	jump_strenght_pulse=-10,
+	jump_strenght_long=-1,
+	horizontal_speed=0,
+	horizontal_speed_max=2,
+	vertical_speed = 0,
+
 	dx=0,
 	dy=0,
-	max_dx=2,
-	max_dy=3,
-	acc=0.5,
-	jump_force=0.5,
 
-	on_ground=true,
+	parse_jump=function(_ENV)
+		local jump_pressed = btn(2)
+
+		if jump_pressed and landed and not jumping then
+			jump_strenght = jump_strenght_pulse - abs(horizontal_speed) + horizontal_speed_max
+			landed = false
+			jumping = true
+		elseif jumping and jump_time> 0 and not landed then
+			jump_strenght = jump_strenght + jump_strenght_long
+			jump_time = jump_time - 1
+		end
+
+		if jumping and not jump_pressed then
+			jump_time = 0
+		end
+
+		jump_strenght = jump_strenght * 0.9
+		vertical_speed = gravity + jump_strenght
+		y = y + vertical_speed
+
+		if collide_map(_ENV, "down", 0) then
+			y=y-(y%8)
+			landed=true
+			jumping=false
+			jump_strenght=0
+			jump_time=7
+		end
+		jumping = jump_pressed
+
+	end,
 
 	update=function(_ENV)
+		parse_jump(_ENV)
+		-----
+		if true then return 0 end
+		--check collision left and right
+		if dx<0 then
+			if collide_map(_ENV,"left",0) then
+			  dx=0
+			end
+		  elseif dx>0 then
+			if collide_map(_ENV,"right",0) then
+			  dx=0
+			end
+		  end
+
+
+		if dx!=0 or dy !=0 then
+			-- normalize movement
+			local a=atan2(dx,dy)
+			x+=cos(a)
+			y+=sin(a)
+
+			-- spawn dust each 3/10 sec
+			-- if (t()*10)\1%3==0 and on_ground then
+			-- 	dust({
+			-- 		x=x+rnd(3),
+			-- 		y=y+4,
+			-- 		frames=18+rnd(4),
+			-- 	})
+			-- end
+		end
+		
+		-- restrict movement
+		-- x=mid(7,x,114)
+		-- y=mid(15,y,116)
+	end,
+
+	animate=function(_ENV)
 		if(running) then
 			if(time()-anim>1/8) then
 				anim = time()
@@ -46,72 +116,6 @@ santa=entity:extend({
 				end
 			end
 		end
-		dy+=gravity
-		dx*=friction
-
-		if (btn(⬅️)) then
-			dx-=acc
-			f=true
-			running = true
-		end
-		if (btn(➡️)) then
-			dx+=acc
-			f=false
-			running = true
-		end
-
-		if running
-		and not btn(⬅️)
-		and not btn(➡️)
-		and not falling
-		and not jumping then
-			running = false
-			sliding = true
-		end
-
-		if(btnp(❎))
-		and landed then
-			dy-=jump_force
-			landed=false
-		end
-
-		if dy>0 then
-			falling=true
-			landed=false
-			jumping=true
-			if collide_map(_ENV, "down", 0) then
-				landed=true
-				falling=true
-				dy=0
-				y-=(y+h)%8
-			end
-		elseif dy<0 then
-			jumping = true
-			if collide_map(_ENV, "up", 0) then
-				dy = 0
-			end
-		end
-
-
-		if dx!=0 or dy !=0 then
-			-- normalize movement
-			local a=atan2(dx,dy)
-			x+=cos(a)
-			y+=sin(a)
-
-			-- spawn dust each 3/10 sec
-			if (t()*10)\1%3==0 and on_ground then
-				dust({
-					x=x+rnd(3),
-					y=y+4,
-					frames=18+rnd(4),
-				})
-			end
-		end
-		
-		-- restrict movement
-		x=mid(7,x,114)
-		y=mid(15,y,116)
 	end,
 
 	draw=function(_ENV)
@@ -126,7 +130,7 @@ santa=entity:extend({
 		end
 		if(s == nil) s=idle_sprite[1]
 		if(o == nil) o=idle_offset[1]
-		rectfill(x,y,x+w,y+h,15)
+		rectfill(x,y,x+15,y+15,9)
 		spr(s,x,y-o,2,2,f)
 	end,
 
