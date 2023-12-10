@@ -27,6 +27,8 @@ entity=class:extend({
 		end
 	end,
 
+	animate=noop,
+
 	detect=function(_ENV,other,callback)
 		if collide(_ENV,other) then
 			callback(_ENV)
