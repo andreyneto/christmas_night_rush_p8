@@ -5,9 +5,8 @@ heart_count=50
 -- globals
 score=0
 timer=0
-speed=1
-gravity=0.1
-friction=0.99
+gravity=5
+friction=0.9
 
 -- game loop
 function _init()
@@ -16,6 +15,7 @@ function _init()
 end
 
 function _update()
+	if btn() == 48 then stop() end
 	scene.current:update()
 	background:update()
 end
