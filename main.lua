@@ -6,7 +6,7 @@ heart_count=50
 score=0
 timer=0
 gravity=5
-friction=0.9
+friction=0.8
 
 -- game loop
 function _init()
