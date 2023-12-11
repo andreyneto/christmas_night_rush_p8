@@ -5,6 +5,7 @@ game_scene=scene:extend({
 
 	update=function(_ENV)
 		entity:each("update")
+		entity:each("animate")
 	end,
 
 	draw=function(_ENV)
