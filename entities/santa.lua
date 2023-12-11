@@ -23,6 +23,7 @@ santa=entity:extend({
 	jump_strenght=0,
 	jump_strenght_pulse=-10,
 	jump_strenght_long=-1,
+	horizontal_accel = 0.1,
 	horizontal_speed=0,
 	horizontal_speed_max=2,
 	vertical_speed = 0,
@@ -31,13 +32,13 @@ santa=entity:extend({
 	dy=0,
 
 	parse_jump=function(_ENV)
-		local jump_pressed = btn(2)
+		local jump_pressed = btn(❎)
 
 		if jump_pressed and landed and not jumping then
 			jump_strenght = jump_strenght_pulse - abs(horizontal_speed) + horizontal_speed_max
 			landed = false
 			jumping = true
-		elseif jumping and jump_time> 0 and not landed then
+		elseif (jumping and jump_time> 0 and not landed) then
 			jump_strenght = jump_strenght + jump_strenght_long
 			jump_time = jump_time - 1
 		end
@@ -50,7 +51,7 @@ santa=entity:extend({
 		vertical_speed = gravity + jump_strenght
 		y = y + vertical_speed
 
-		if collide_map(_ENV, "down", 0) then
+		if vertical_speed > 0 and collide_map(_ENV, "down", 0) then
 			y=y-(y%8)
 			landed=true
 			jumping=false
@@ -61,8 +62,45 @@ santa=entity:extend({
 
 	end,
 
+	parse_run=function(_ENV)
+		local dir_modifier = 0
+		if btn(⬅️) then
+			f = true
+			dir_modifier = -1
+		elseif btn(➡️) then
+			f = false
+			dir_modifier = 1
+		end
+		running = btn(0) or btn(1)
+		if running then
+			horizontal_speed = horizontal_speed + (horizontal_accel * dir_modifier)
+			horizontal_speed = mid(-horizontal_speed_max, horizontal_speed, horizontal_speed_max)
+		else
+			horizontal_speed = horizontal_speed * friction
+			if abs(horizontal_speed) < 0.1 then
+				horizontal_speed = 0
+			end
+		end
+		if (collide_map(_ENV,"left",1) and horizontal_speed<0)
+		or (collide_map(_ENV,"right",1) and horizontal_speed>0) then
+			horizontal_speed = 0
+		end
+		if(vertical_speed == 0) then
+			if (collide_map(_ENV,"left",0) and horizontal_speed<0)
+			or (collide_map(_ENV,"right",0) and horizontal_speed>0) then
+				horizontal_speed = 0
+			end
+		end
+		x = x + horizontal_speed
+	end,
+
 	update=function(_ENV)
 		parse_jump(_ENV)
+		parse_run(_ENV)
+
+		-- restrict movement
+		x=mid(8,x,108)
+		-- y=mid(15,y,116)
 		-----
 		if true then return 0 end
 		--check collision left and right
@@ -92,10 +130,6 @@ santa=entity:extend({
 			-- 	})
 			-- end
 		end
-		
-		-- restrict movement
-		-- x=mid(7,x,114)
-		-- y=mid(15,y,116)
 	end,
 
 	animate=function(_ENV)
@@ -130,8 +164,7 @@ santa=entity:extend({
 		end
 		if(s == nil) s=idle_sprite[1]
 		if(o == nil) o=idle_offset[1]
-		rectfill(x,y,x+15,y+15,9)
-		spr(s,x,y-o,2,2,f)
+		spr(s,f and x-2 or x-1,y-o,2,2,f)
 	end,
 
 	collide_map=function(_ENV,aim, flag)
