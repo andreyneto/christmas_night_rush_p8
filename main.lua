@@ -7,23 +7,24 @@ score=0
 timer=0
 gravity=5
 friction=0.8
+speed=0.1
 
 -- game loop
 function _init()
+	background:init()
 	scene:load(title_scene)
 	log("_init", true)
 end
 
 function _update()
-	if btn() == 48 then stop() end
 	scene.current:update()
-	background:update()
+	if(btnp(2)) then speed += 1 end
+	if(btnp(3)) then speed -= 1 end
 end
 
 function _draw()
 	-- background
 	cls(0)
-
 	-- scene
 	background:draw()
 	scene.current:draw()
