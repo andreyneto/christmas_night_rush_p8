@@ -33,3 +33,32 @@ spark=particle:extend({
 	clr=10,
 	sy=-.5,
 })
+
+-- clouds
+cloud=class:extend({
+	x=0,
+	y=0,
+	spd=0,
+	w=0,
+	clr=0,
+	-- class
+	pool={},
+	init=function (_ENV)
+		add(pool, _ENV)
+	end,
+	update=function(_ENV)
+		x -= spd*speed
+		if x+w < 0 then
+			x = 128+w
+			y=rnd(128-8)
+		end
+	end,
+	draw=function(_ENV)
+		rectfill(x,y,x+w,y+4+(1-w/64)*12,clr)
+	end,
+	each=function(_ENV,method,...)
+		for e in all(pool) do
+			if (e[method]) e[method](e,...)
+		end
+	end,
+})
