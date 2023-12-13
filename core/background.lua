@@ -38,6 +38,9 @@ background=class:extend({
          i+=1
          if i==gradsteps[i2+1] then i2+=1 end
         end
+        for i=0,2 do
+            cloud({x=rnd(128),y=rnd(32),spd=1+rnd(2),w=32+rnd(32),clr=0})
+        end
         for i=0,16 do
             cloud({x=rnd(128),y=rnd(128),spd=1+rnd(2),w=32+rnd(32),clr=rnd({1,13})})
         end
