@@ -6,7 +6,6 @@ chunk=class:extend({
 	-- class
 	pool={},
 	real_pos=function(_ENV, entity)
-		log(#pool)
 		local i = #pool >1 and entity.x >= pool[2].sx-8 and 2 or 1
 		local c = pool[i]
 		
