@@ -1,5 +1,5 @@
 santa=entity:extend({
-	x=16,
+	x=0,
 	y=64,
 	w=12,
 	h=16,
@@ -25,8 +25,10 @@ santa=entity:extend({
 	jump_strenght_long=-1,
 	horizontal_accel = 0.1,
 	horizontal_speed=0,
-	horizontal_speed_max=2,
+	horizontal_speed_max=3,
 	vertical_speed = 0,
+
+	left_limit = 0,
 
 	dx=0,
 	dy=0,
@@ -35,7 +37,7 @@ santa=entity:extend({
 		local jump_pressed = btn(❎)
 
 		if jump_pressed and landed and not jumping then
-			jump_strenght = jump_strenght_pulse - abs(horizontal_speed) + horizontal_speed_max
+			jump_strenght = jump_strenght_pulse - abs(horizontal_speed + mid(0,speed,3)) + horizontal_speed_max
 			landed = false
 			jumping = true
 		elseif (jumping and jump_time> 0 and not landed) then
@@ -50,7 +52,7 @@ santa=entity:extend({
 		jump_strenght = jump_strenght * 0.9
 		vertical_speed = gravity + jump_strenght
 		y = y + vertical_speed
-
+		
 		if vertical_speed > 0 and collide_map(_ENV, "down", 0) then
 			y=y-(y%8)
 			landed=true
@@ -92,15 +94,19 @@ santa=entity:extend({
 			end
 		end
 		x = x + horizontal_speed
+		if x<left_limit+4 and not f then running = true end
 	end,
 
 	update=function(_ENV)
 		parse_jump(_ENV)
 		parse_run(_ENV)
-
+		x-=speed
 		-- restrict movement
-		x=mid(8,x,108)
-		-- y=mid(15,y,116)
+		if(speed >= horizontal_speed_max and left_limit<16) then
+			left_limit+=0.1
+		end
+		x=mid(left_limit,x,116)
+		-- y=mid(12,y,127)
 		-----
 		if true then return 0 end
 		--check collision left and right
@@ -168,6 +174,9 @@ santa=entity:extend({
 	end,
 
 	collide_map=function(_ENV,aim, flag)
+		local rp = chunk.real_pos(chunk, _ENV)
+		local x = rp.x
+		local y = rp.y
 		local x1=0    local y1=0
 		local x2=0    local y2=0
 		if aim=="left" then
@@ -186,6 +195,9 @@ santa=entity:extend({
 			x1=x      y1=y+h
 			x2=x+w    y2=y+h
 		 end
+		 --fix pan
+		--  x1 = x1+(-scene.current.map_x)
+		--  x2 = x2+(-scene.current.map_x)
 		 --pixels to tiles
 		 x1/=8    y1/=8
 		 x2/=8    y2/=8
