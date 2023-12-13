@@ -32,10 +32,10 @@ title_scene=scene:extend({
 	update=function(_ENV)
 		entity:each("update")
 		if btnp(⬇️) then
-			repeat selected += 1 until options[selected].call != noop
+			selected += 1
 		end
 		if btnp(⬆️) then
-			repeat selected -= 1 until options[selected].call != noop
+			selected -= 1
 		end
 		selected=mid(1,selected,#options)
 		if btnp(❎) then
@@ -49,7 +49,7 @@ title_scene=scene:extend({
 		local p = 64+((64-(#options*8))/2)-8
 		for i=1, #options do
 			local is_selected = i==selected
-			printc((is_selected and "> " or "")..options[i].label[language]..(is_selected and " <" or ""), p+(8*i), is_selected and 10 or (options[i].call == noop) and 6 or 7, is_selected)
+			printc((is_selected and "> " or "")..options[i].label[language]..(is_selected and " <" or ""), p+(8*i), options[i].call == noop and 6 or is_selected and 10 or 7, is_selected)
 			if(i == #options) then
 			end
 		end
