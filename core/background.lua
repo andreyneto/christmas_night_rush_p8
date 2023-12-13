@@ -17,8 +17,8 @@ background=class:extend({
         0b1111110111110111,
         0b1111111111110111
     },
-    gradsteps={8,64,96,104,127},
-    gradpal={0,1,2,3,4},
+    gradsteps={8,64,128},
+    gradpal={0,1,2},
     init=function(_ENV)
         i=2
         i2=1
@@ -38,6 +38,9 @@ background=class:extend({
          i+=1
          if i==gradsteps[i2+1] then i2+=1 end
         end
+        for i=0,16 do
+            cloud({x=rnd(128),y=rnd(128),spd=1+rnd(2),w=32+rnd(32),clr=rnd({1,13})})
+        end
     end,
     draw=function(_ENV)
         -- for i=1,#gradpal do
@@ -48,5 +51,9 @@ background=class:extend({
         line(0,y,127,y,gradient[y+1][2])
         end
         fillp()
+        cloud:each("draw")
+    end,
+    update=function(_ENV)
+        cloud:each("update")
     end
 })
