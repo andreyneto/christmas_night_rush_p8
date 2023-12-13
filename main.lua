@@ -17,6 +17,7 @@ function _init()
 end
 
 function _update()
+	background:update()
 	scene.current:update()
 	if(btnp(2)) then speed += 1 end
 	if(btnp(3)) then speed -= 1 end
