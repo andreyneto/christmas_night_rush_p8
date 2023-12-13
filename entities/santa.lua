@@ -25,7 +25,7 @@ santa=entity:extend({
 	jump_strenght_long=-1,
 	horizontal_accel = 0.1,
 	horizontal_speed=0,
-	horizontal_speed_max=3,
+	horizontal_speed_max=2,
 	vertical_speed = 0,
 
 	left_limit = 0,
@@ -148,7 +148,7 @@ santa=entity:extend({
 				end
 			end
 		else
-			if(time()-anim>6/8) then
+			if(time()-anim>1/2) then
 				anim = time()
 				sprite+=1
 				if (sprite>1) then
