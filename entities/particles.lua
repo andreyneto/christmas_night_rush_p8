@@ -50,7 +50,7 @@ cloud=class:extend({
 		x -= spd*speed
 		if x+w < 0 then
 			x = 128+w
-			y=rnd(128-8)
+			y=rnd(clr == 0 and 32 or 128-8)
 		end
 	end,
 	draw=function(_ENV)
