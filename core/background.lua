@@ -19,7 +19,7 @@ background=class:extend({
     },
     gradsteps={8,64,96,104,127},
     gradpal={0,1,2,3,4},
-    update=function(_ENV)
+    init=function(_ENV)
         i=2
         i2=1
         
