@@ -19,11 +19,6 @@ chunk=class:extend({
 		ry +=entity.y
 		return {chunk=i,x=rx,y=ry}
 	end,
-	
-	extend=function(_ENV,tbl)
-		tbl=class.extend(_ENV,tbl)
-		return tbl
-	end,
 
 	each=function(_ENV,method,...)
 		for e in all(pool) do
