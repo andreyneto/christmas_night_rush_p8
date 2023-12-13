@@ -1,4 +1,4 @@
-cartdata("xmas_nigth_rush")
+cartdata("xmas_nigth_rush_b")
 global=_ENV
 noop=function()end
 
@@ -14,6 +14,9 @@ strings={
 	language={"language", "idioma"},
 	leaderboard={"leaderboard", "placar"},
 	start_game={"start game", "comecar"},
+	
+	score={"SCORE", "PONTOS"},
+	coins={"COINS", "MOEDAS"},
 }
 
 function log(str, override)
@@ -30,10 +33,20 @@ function prints(str,x,y,clr)
 	print(str,x,y,clr)
 end
 
-function pad(str,len,char)
-	str=tostr(str)
-	char=char or "0"
-	if (#str==len) return str
-	return char..pad(str, len-1)
+function tostr(number)
+	local integerPart = flr(number)
+	local decimalPart = (number - integerPart) * 10
+	local integerString = flr(number).."."
+	local decimalString = flr(decimalPart)
+	return integerString .. decimalString
 end
 
+function fill_number(number, limit)
+    local numberString = "" .. number
+	
+    while #numberString < (limit or 5) do
+        numberString = "0" .. numberString
+    end
+
+    return numberString
+end
