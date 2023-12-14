@@ -7,7 +7,7 @@ score=0
 timer=0
 gravity=5
 friction=0.8
-speed=0.5
+speed=1
 
 -- game loop
 function _init()
