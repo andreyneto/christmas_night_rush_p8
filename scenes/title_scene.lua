@@ -44,8 +44,8 @@ title_scene=scene:extend({
 	end,
 
 	draw=function(_ENV)
-		spr(128,8,56,14,2)
-		spr(192,16,32,12,3)
+		spr(16,8,56,14,2)
+		spr(128,16,32,12,3)
 		local p = 64+((64-(#options*8))/2)-8
 		for i=1, #options do
 			local is_selected = i==selected

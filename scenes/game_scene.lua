@@ -5,7 +5,6 @@ game_scene=scene:extend({
 	init=function(_ENV)
 		player=santa()
 		chunk()
-		chunk({celx=16})
 		-- chunk()
 	end,
 
@@ -31,7 +30,7 @@ game_scene=scene:extend({
 		add(entity.pool,del(entity.pool,player))
 		chunk:each("draw")
 		local gui = {
-			{strings.score,fill_number(flr(score)).."00",0,204},
+			{strings.score,fill_number(flr(score)).."00",0,48},
 			{strings.coins,fill_number(flr(coins), 7),42,1},
 		}
 		foreach(gui, function (i)

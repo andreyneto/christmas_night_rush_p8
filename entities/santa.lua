@@ -8,9 +8,9 @@ santa=entity:extend({
 	anim=0,
 	sprite=0,
 	offset=0,
-	idle_sprite={160,174},
+	idle_sprite={64,78},
 	idle_offset={0,0},
-	run_sprite={162,164,166,160,168,170,172,160},
+	run_sprite={66,68,70,64,72,74,76,64},
 	run_offset={1,2,0,0,1,2,0,0},
 
 	running=false,
@@ -59,6 +59,10 @@ santa=entity:extend({
 			jumping=false
 			jump_strenght=0
 			jump_time=7
+		end
+		if vertical_speed < 0 and collide_map(_ENV, "up", 1) then
+			jump_time = 0
+			jump_strenght=0
 		end
 		jumping = jump_pressed
 
@@ -180,20 +184,20 @@ santa=entity:extend({
 		local x1=0    local y1=0
 		local x2=0    local y2=0
 		if aim=="left" then
-			x1=x-1  y1=y
+			x1=x+6  y1=y
 			x2=x    y2=y+h-1
 		 
 		 elseif aim=="right" then
 			x1=x+w    y1=y
-			x2=x+w+1  y2=y+h-1
+			x2=x+w-6  y2=y+h-1
 		 
 		 elseif aim=="up" then
-			x1=x+1    y1=y-1
-			x2=x+w-1  y2=y
+			x1=x+4    y1=y-1
+			x2=x+w-4  y2=y
 		 
 		 elseif aim=="down" then
-			x1=x      y1=y+h
-			x2=x+w    y2=y+h
+			x1=x+4      y1=y+h
+			x2=x+w-4    y2=y+h
 		 end
 		 --fix pan
 		--  x1 = x1+(-scene.current.map_x)

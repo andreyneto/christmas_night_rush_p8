@@ -16,11 +16,11 @@ function _init()
 	log("_init", true)
 end
 
-function _update60()
+function _update()
 	background:update()
 	scene.current:update()
-	if(btnp(2)) then speed += 1 end
-	if(btnp(3)) then speed *= 0.9 end
+	if(btnp(2)) then speed += 0.5 end
+	if(btnp(3)) then speed -= 0.5 end
 end
 
 function _draw()

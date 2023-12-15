@@ -3,8 +3,8 @@ global=_ENV
 noop=function()end
 
 languages={
-	{"EN",158},
-	{"BR",142},
+	{"EN",11},
+	{"BR",9},
 }
 
 language=dget(0) == 0 and 1 or dget(0)

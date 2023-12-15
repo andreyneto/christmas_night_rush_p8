@@ -39,10 +39,9 @@ chunk=class:extend({
 		coin.block(_ENV, cw, factor, rnd(127),rnd(127))
 	end,
 	update=function(_ENV)
-		while #pool < 5 do
+		while #pool < 2 do
 			local rx = flr(rnd(7)) * 16
 			local ry = flr(rnd(2)) * 16
-			log(ry)
 			chunk({celx=rx, cely = ry,sx = pool[#pool].sx+128})
 		end
 		sx-=speed

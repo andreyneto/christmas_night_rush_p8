@@ -47,7 +47,7 @@ cloud=class:extend({
 		add(pool, _ENV)
 	end,
 	update=function(_ENV)
-		x -= spd*(speed*0.1)
+		x -= spd*(speed>0 and speed or 1*0.1)
 		if x+w < 0 then
 			x = 128+w
 			y=rnd(clr == 0 and 32 or 128-8)
