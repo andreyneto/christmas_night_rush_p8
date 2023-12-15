@@ -5,10 +5,8 @@ game_scene=scene:extend({
 	init=function(_ENV)
 		player=santa()
 		chunk()
-		chunk({celx=16, sx=128})
-		for c=0,128,8 do
-		coin({x=c})
-		end
+		chunk({celx=16})
+		-- chunk()
 	end,
 
 	update=function(_ENV)

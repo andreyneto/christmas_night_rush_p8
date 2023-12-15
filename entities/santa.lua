@@ -1,6 +1,6 @@
 santa=entity:extend({
-	x=0,
-	y=64,
+	x=32,
+	y=32,
 	w=12,
 	h=16,
 	f=false,

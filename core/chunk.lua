@@ -28,10 +28,22 @@ chunk=class:extend({
 	-- instance
 	init=function(_ENV)
 		add(pool,_ENV)
+		local cw = rnd(16)
+		local factor = 1
+		for i = 2, 16 do
+		  if (cw * i) >= 16 then
+			factor = i
+			break
+		  end
+		end
+		coin.block(_ENV, cw, factor, rnd(127),rnd(127))
 	end,
 	update=function(_ENV)
-		while #pool < 10 do
-			chunk({sx = pool[#pool].sx+128})
+		while #pool < 5 do
+			local rx = flr(rnd(7)) * 16
+			local ry = flr(rnd(2)) * 16
+			log(ry)
+			chunk({celx=rx, cely = ry,sx = pool[#pool].sx+128})
 		end
 		sx-=speed
 		if sx < -128 then

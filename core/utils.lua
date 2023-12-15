@@ -50,3 +50,7 @@ function fill_number(number, limit)
 
     return numberString
 end
+
+function rndb(min, max)
+	return flr(rnd(max - min + 1)) + min
+end
