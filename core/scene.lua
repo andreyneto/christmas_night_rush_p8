@@ -6,6 +6,7 @@ scene=class:extend({
 
 	destroy=function(_ENV)
 		entity:each("destroy")
+		chunk:each("destroy")
 	end,
 
 	load=function(_ENV,scn)

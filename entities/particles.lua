@@ -25,7 +25,7 @@ particle=entity:extend({
 
 dust=particle:extend({
 	rad=2,
-	sy=.25,
+	sy=-.25,
 	clr=7
 })
 

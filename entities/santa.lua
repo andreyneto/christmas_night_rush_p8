@@ -4,6 +4,7 @@ santa=entity:extend({
 	w=12,
 	h=16,
 	f=false,
+	y_offset=0,
 
 	anim=0,
 	sprite=0,
@@ -37,6 +38,11 @@ santa=entity:extend({
 		local jump_pressed = btn(❎)
 
 		if jump_pressed and landed and not jumping then
+			if collide_map(_ENV,"down",2) then for i=1, 10 do dust({
+				x=x+rnd(i),
+				y=y+4+12,
+				frames=18+rnd(4),
+			}) end end
 			jump_strenght = jump_strenght_pulse - abs(horizontal_speed + mid(0,speed,3)) + horizontal_speed_max
 			landed = false
 			jumping = true
@@ -104,6 +110,9 @@ santa=entity:extend({
 	update=function(_ENV)
 		parse_jump(_ENV)
 		parse_run(_ENV)
+		y_offset = (y-88)*0.1
+		y_offset = y_offset > 0 and 0 or y_offset
+		camera(0,y_offset)
 		x-=speed
 		-- restrict movement
 		if(speed >= horizontal_speed_max and left_limit<16) then
@@ -111,34 +120,18 @@ santa=entity:extend({
 		end
 		x=mid(left_limit,x,116)
 		-- y=mid(12,y,127)
-		-----
-		if true then return 0 end
-		--check collision left and right
-		if dx<0 then
-			if collide_map(_ENV,"left",0) then
-			  dx=0
+		if (t()*10)\1%3==0 and running and collide_map(_ENV,"down",2) then
+			dust({
+				x=x+rnd(3),
+				y=y+4+12,
+				frames=18+rnd(4),
+			})
+		end
+		if y >= 128 then
+			if(game_scene.go_time == 0) then
+				game_scene.go_time = time()
+				global.speed = 0
 			end
-		  elseif dx>0 then
-			if collide_map(_ENV,"right",0) then
-			  dx=0
-			end
-		  end
-
-
-		if dx!=0 or dy !=0 then
-			-- normalize movement
-			local a=atan2(dx,dy)
-			x+=cos(a)
-			y+=sin(a)
-
-			-- spawn dust each 3/10 sec
-			-- if (t()*10)\1%3==0 and on_ground then
-			-- 	dust({
-			-- 		x=x+rnd(3),
-			-- 		y=y+4,
-			-- 		frames=18+rnd(4),
-			-- 	})
-			-- end
 		end
 	end,
 
@@ -199,9 +192,6 @@ santa=entity:extend({
 			x1=x+4      y1=y+h
 			x2=x+w-4    y2=y+h
 		 end
-		 --fix pan
-		--  x1 = x1+(-scene.current.map_x)
-		--  x2 = x2+(-scene.current.map_x)
 		 --pixels to tiles
 		 x1/=8    y1/=8
 		 x2/=8    y2/=8
