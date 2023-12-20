@@ -45,7 +45,7 @@ end
 function fill_number(number, limit)
     local numberString = "" .. number
 	
-    while #numberString < (limit or 5) do
+    while #numberString < (limit or 4) do
         numberString = "0" .. numberString
     end
 
