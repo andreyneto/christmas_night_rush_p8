@@ -17,10 +17,11 @@ strings={
 	
 	score={"SCORE", "PONTOS"},
 	coins={"COINS", "MOEDAS"},
+	distance={"DISTANCE", "DISTANCIA"},
 }
 
 function log(str, override)
-	printh(str, "log", override)
+	printh(time()..": "..str, "log", override)
 end
 
 function printc(str,y,clr,s)

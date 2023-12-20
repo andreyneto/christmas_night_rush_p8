@@ -3,8 +3,20 @@ chunk=class:extend({
 	cely=0,
 	sx=0,
 	sy=0,
+    coins={},
+	rnd_cb=true,
 	-- class
 	pool={},
+	def={
+		{celx=0,cely=0},
+		{celx=16,cely=0,coins={{w=4,h=1,x=32,y=88},{w=3,h=1,x=80,y=80},{w=1,h=1,x=72,y=72},{w=1,h=1,x=64,y=80},{w=1,h=1,x=104,y=88},}, rnd_cb=false},
+		{celx=32,cely=0,coins={{w=7,h=1,x=8,y=16},{w=3,h=2,x=40,y=56},{w=3,h=2,x=80,y=72},{w=16,h=1,x=0,y=96},}, rnd_cb=false},
+		{celx=48,cely=0,coins={{w=6,h=1,x=72,y=16},{w=6,h=1,x=72,y=56},{w=4,h=3,x=80,y=72},{w=3,h=2,x=24,y=32},}, rnd_cb=false },
+		{celx=64,cely=0,coins={{w=5,h=2,x=16,y=16},{w=3,h=1,x=0,y=96},{w=6,h=1,x=24,y=80},{w=4,h=1,x=72,y=64},},rnd_cb=false},
+		{celx=80,cely=0,coins={{w=16,h=2,x=0,y=88},{w=16,h=2,x=0,y=56},{w=16,h=2,x=0,y=32},{w=16,h=1,x=0,y=16}},rnd_cb=false},
+		{celx=96,cely=0,coins={{w=1,h=6,x=32,y=40},{w=2,h=2,x=72,y=56},{w=2,h=2,x=104,y=56}},rnd_cb=false},
+		{celx=112,cely=0,coins={{w=3,h=2,x=8,y=16},{w=3,h=2,x=56,y=16},{w=3,h=2,x=104,y=16},{w=4,h=2,x=0,y=88},{w=3,h=2,x=32,y=80},{w=3,h=2,x=56,y=72},{w=3,h=2,x=80,y=80},{w=3,h=2,x=104,y=88},},rnd_cb=false},
+	},
 	real_pos=function(_ENV, entity)
 		local i = #pool >1 and entity.x >= pool[2].sx-8 and 2 or 1
 		local c = pool[i]
@@ -24,25 +36,25 @@ chunk=class:extend({
 			if (e[method]) e[method](e,...)
 		end
 	end,
-
 	-- instance
 	init=function(_ENV)
 		add(pool,_ENV)
-		local cw = rnd(16)
-		local factor = 1
-		for i = 2, 16 do
-		  if (cw * i) >= 16 then
-			factor = i
-			break
-		  end
-		end
-		coin.block(_ENV, cw, factor, rnd(127),rnd(127))
+		foreach(coins, function (b)
+			if not rnd_cb or rnd() > 0.50 then
+				coin.block(b.w, b.h, sx+b.x,sy+b.y)
+			end
+		end)
 	end,
 	update=function(_ENV)
 		while #pool < 2 do
-			local rx = flr(rnd(7)) * 16
-			local ry = flr(rnd(2)) * 16
-			chunk({celx=rx, cely = ry,sx = pool[#pool].sx+128})
+			local d
+			repeat
+				d = rnd(def)
+			until d != def[1] and 
+			chunk({
+				sx = pool[#pool].sx+128,
+				celx=d.celx,cely=d.cely,coins=d.coins, rnd_cb=d.rnd_cb
+			})
 		end
 		sx-=speed
 		if sx < -128 then

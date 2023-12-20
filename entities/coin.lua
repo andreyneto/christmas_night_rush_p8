@@ -38,20 +38,12 @@ coin=entity:extend({
 			coin({x=cx+sx,y=cy+sy})
 		end
     end,
-    block=function(chunk, w, h, bx, by)
-        local sy = chunk.sy
-        local sx = chunk.sx
+    block=function(w, h, bx, by)
         for i=0, w-1 do
             for j=0, h-1 do
                 local cx = i*8
                 local cy = j*8
-                if bx+cx < 120
-                and bx+cx >= 4
-                and by+cy <= 96
-                and by+cy >= 16
-                then
-                    coin({x=bx+cx+sx, y=by+cy+sy})
-                end
+                coin({x=bx+cx, y=by+cy})
             end
         end
     end

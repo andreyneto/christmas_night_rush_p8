@@ -7,7 +7,7 @@ score=0
 timer=0
 gravity=5
 friction=0.8
-speed=0
+speed=1
 
 -- game loop
 function _init()
@@ -19,8 +19,6 @@ end
 function _update()
 	background:update()
 	scene.current:update()
-	if(btnp(2)) then speed += 0.5 end
-	if(btnp(3)) then speed -= 0.5 end
 end
 
 function _draw()
