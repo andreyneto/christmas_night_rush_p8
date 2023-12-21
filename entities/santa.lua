@@ -19,6 +19,7 @@ santa=entity:extend({
 	falling=false,
 	sliding=false,
 	landed=true,
+	just_landed=true,
 
 	jump_time = 7,
 	jump_strenght=0,
@@ -38,13 +39,16 @@ santa=entity:extend({
 		local jump_pressed = btn(❎)
 
 		if jump_pressed and landed and not jumping then
-			if collide_map(_ENV,"down",2) then for i=1, 10 do dust({
-				x=x+rnd(i),
-				y=y+4+12,
-				frames=18+rnd(4),
-			}) end end
+			if collide_map(_ENV,"down",2) then
+				for i=1, 8 do dust({
+					x=x+rnd(i),
+					y=y+4+12,
+					frames=18+rnd(4),
+				}) end
+			end
 			jump_strenght = jump_strenght_pulse - abs(horizontal_speed + mid(0,speed,3)) + horizontal_speed_max
 			landed = false
+			just_landed = false
 			jumping = true
 		elseif (jumping and jump_time> 0 and not landed) then
 			jump_strenght = jump_strenght + jump_strenght_long
@@ -65,6 +69,14 @@ santa=entity:extend({
 			jumping=false
 			jump_strenght=0
 			jump_time=7
+			if not just_landed and collide_map(_ENV,"down",2) then
+				just_landed = true
+				for i=1, 16 do dust({
+					x=x+rnd(i),
+					y=y+4+12,
+					frames=18+rnd(4),
+				}) end
+			end
 		end
 		if vertical_speed < 0 and collide_map(_ENV, "up", 1) then
 			jump_time = 0
@@ -127,7 +139,9 @@ santa=entity:extend({
 				frames=18+rnd(4),
 			})
 		end
-		if y >= 128 then
+		if y >= 128
+		or collide_map(_ENV,"right",0) and x <= left_limit and not jumping
+		then
 			if(game_scene.go_time == 0) then
 				game_scene.go_time = time()
 				global.speed = 0
