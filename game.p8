@@ -8,6 +8,7 @@ __lua__
 #include core/class.lua
 #include core/chunk.lua
 #include core/background.lua
+#include core/foreground.lua
 #include core/entity.lua
 #include core/scene.lua
 #include core/utils.lua

@@ -19,12 +19,20 @@ score={
 			score.coins[1] = 0
 			score.coins[2] += 1
 		end
+		if(score.coins[1] % 100 == 0 ) then
+			speed += 0.1
+			speed = mid(0, speed, 2.5)
+		end
     end,
 	addpoints=function(value)
         score.points[1] += value or 0
 		if(score.points[1]>=9999) then
 			score.points[1] = 0
 			score.points[2] += 1
+		end
+		if(score.points[1] % 1000 == 0 ) then
+			speed += 0.1
+			speed = mid(0, speed, 2.5)
 		end
     end,
     adddistance=function()
@@ -38,7 +46,7 @@ score={
 			end
 			if(score.distance[1] % 1000 == 0 ) then
 				speed += 0.1
-				speed = mid(0, speed, 2.9)
+				speed = mid(0, speed, 2.5)
 			end
 		end
     end,
@@ -57,11 +65,13 @@ function _init()
 	background:init()
 	scene:load(title_scene)
 	log("_init", true)
+	foreground:init()
 end
 
 function _update()
 	background:update()
 	scene.current:update()
+	foreground:update()
 end
 
 function _draw()
@@ -70,4 +80,5 @@ function _draw()
 	-- scene
 	background:draw()
 	scene.current:draw()
+	foreground:draw()
 end

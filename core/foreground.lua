@@ -1,0 +1,19 @@
+foreground=class:extend({
+    init=function(_ENV)
+        for i=0,128 do
+            snow({
+                x=rnd(128),
+                y=rnd(128),
+                s=0+flr(rnd(5)/4),
+                spd=0.25+rnd(2),
+                off=rnd(1),
+                c=6+flr(0.5+rnd(1))})
+        end
+    end,
+    draw=function(_ENV)
+        snow:each("draw")
+    end,
+    update=function(_ENV)
+        snow:each("update")
+    end
+})

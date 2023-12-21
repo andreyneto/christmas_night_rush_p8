@@ -26,7 +26,7 @@ santa=entity:extend({
 	jump_strenght_long=-1,
 	horizontal_accel = 0.1,
 	horizontal_speed=0,
-	horizontal_speed_max=2,
+	horizontal_speed_max=2.5,
 	vertical_speed = 0,
 
 	left_limit = 0,

@@ -11,6 +11,7 @@ particle=entity:extend({
 		x+=sx
 		y+=sy
 		frame+=1
+		x-=speed
 		
 		if frame>=frames then
 			destroy(_ENV)
@@ -55,6 +56,41 @@ cloud=class:extend({
 	end,
 	draw=function(_ENV)
 		rectfill(x,y,x+w,y+4+(1-w/64)*12,clr)
+	end,
+	each=function(_ENV,method,...)
+		for e in all(pool) do
+			if (e[method]) e[method](e,...)
+		end
+	end,
+})
+
+-- snow
+snow=class:extend({
+	x=0,
+	y=0,
+	s=0,
+	spd=0,
+	off=0,
+	c=0,
+	pool={},
+	init=function (_ENV)
+		add(pool, _ENV)
+	end,
+	update=function(_ENV)
+		local ps = speed == 0 and 1 or speed
+		if scene.current == game_scene then ps *= spd end
+		y += ps
+		x += sin(off)
+		off+= 0.05
+		if y>128+4 then 
+			y=-4
+			x=rnd(256)
+		end
+
+		x-=speed
+	end,
+	draw=function(_ENV)
+		rectfill(x,y,x+s,y+s,c)
 	end,
 	each=function(_ENV,method,...)
 		for e in all(pool) do
