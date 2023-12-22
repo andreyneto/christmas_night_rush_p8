@@ -4,7 +4,7 @@ heart_count=50
 
 -- globals
 gravity=5
-friction=0.8
+friction=0.5
 speed=0.9
 
 --score
@@ -13,6 +13,12 @@ score={
     points={0,0},
     coins={0,0},
 	steps=0,
+	reset=function()
+		score.distance={0,0}
+		score.points={0,0}
+		score.coins={0,0}
+		score.steps=0
+	end,
 	addcoin=function()
         score.coins[1] += 1
 		if(score.coins[1]>=9999) then
@@ -30,7 +36,7 @@ score={
 			score.points[1] = 0
 			score.points[2] += 1
 		end
-		if(score.points[1] % 1000 == 0 ) then
+		if(score.points[1] % 100 == 0 ) then
 			speed += 0.1
 			speed = mid(0, speed, 2.5)
 		end
@@ -44,7 +50,7 @@ score={
 				score.distance[1] = 0
 				score.distance[2] += 1
 			end
-			if(score.distance[1] % 1000 == 0 ) then
+			if(score.distance[1] % 100 == 0 ) then
 				speed += 0.1
 				speed = mid(0, speed, 2.5)
 			end

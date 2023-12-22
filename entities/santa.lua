@@ -21,6 +21,8 @@ santa=entity:extend({
 	landed=true,
 	just_landed=true,
 
+	is_dead=false,
+
 	jump_time = 7,
 	jump_strenght=0,
 	jump_strenght_pulse=-10,
@@ -39,7 +41,7 @@ santa=entity:extend({
 		local jump_pressed = btn(❎)
 
 		if jump_pressed and landed and not jumping then
-			if collide_map(_ENV,"down",2) then
+			if collide_map(_ENV,"down",flags.ceiling) then
 				for i=1, 8 do dust({
 					x=x+rnd(i),
 					y=y+4+12,
@@ -63,13 +65,13 @@ santa=entity:extend({
 		vertical_speed = gravity + jump_strenght
 		y = y + vertical_speed
 		
-		if vertical_speed > 0 and collide_map(_ENV, "down", 0) then
+		if vertical_speed > 0 and collide_map(_ENV, "down", flags.floor) then
 			y=y-(y%8)
 			landed=true
 			jumping=false
 			jump_strenght=0
 			jump_time=7
-			if not just_landed and collide_map(_ENV,"down",2) then
+			if not just_landed and collide_map(_ENV,"down",flags.snow) then
 				just_landed = true
 				for i=1, 16 do dust({
 					x=x+rnd(i),
@@ -78,7 +80,7 @@ santa=entity:extend({
 				}) end
 			end
 		end
-		if vertical_speed < 0 and collide_map(_ENV, "up", 1) then
+		if vertical_speed < 0 and collide_map(_ENV, "up", flags.ceiling) then
 			jump_time = 0
 			jump_strenght=0
 		end
@@ -105,13 +107,13 @@ santa=entity:extend({
 				horizontal_speed = 0
 			end
 		end
-		if (collide_map(_ENV,"left",1) and horizontal_speed<0)
-		or (collide_map(_ENV,"right",1) and horizontal_speed>0) then
+		if (collide_map(_ENV,"left",flags.ceiling) and horizontal_speed<0)
+		or (collide_map(_ENV,"right",flags.ceiling) and horizontal_speed>0) then
 			horizontal_speed = 0
 		end
 		if(vertical_speed == 0) then
-			if (collide_map(_ENV,"left",0) and horizontal_speed<0)
-			or (collide_map(_ENV,"right",0) and horizontal_speed>0) then
+			if (collide_map(_ENV,"left",flags.floor) and horizontal_speed<0)
+			or (collide_map(_ENV,"right",flags.floor) and horizontal_speed>0) then
 				horizontal_speed = 0
 			end
 		end
@@ -120,6 +122,11 @@ santa=entity:extend({
 	end,
 
 	update=function(_ENV)
+		if collide_map(_ENV,"down",flags.snow) then
+			global.friction = 0.5
+		elseif collide_map(_ENV,"down",flags.slip) then
+			global.friction = 0.9
+		end
 		parse_jump(_ENV)
 		parse_run(_ENV)
 		y_offset = (y-88)*0.1
@@ -132,7 +139,7 @@ santa=entity:extend({
 		end
 		x=mid(left_limit,x,116)
 		-- y=mid(12,y,127)
-		if (t()*10)\1%3==0 and running and collide_map(_ENV,"down",2) then
+		if (t()*10)\1%3==0 and running and collide_map(_ENV,"down",flags.snow) then
 			dust({
 				x=x+rnd(3),
 				y=y+4+12,
@@ -140,12 +147,10 @@ santa=entity:extend({
 			})
 		end
 		if y >= 128
-		or collide_map(_ENV,"right",0) and x <= left_limit and not jumping
+		or collide_map(_ENV,"right",flags.ceiling) and x <= left_limit and not jumping
 		then
-			if(game_scene.go_time == 0) then
-				game_scene.go_time = time()
-				global.speed = 0
-			end
+			is_dead = true
+			global.speed = 0
 		end
 	end,
 

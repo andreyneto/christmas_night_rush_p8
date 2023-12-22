@@ -2,12 +2,16 @@ game_scene=scene:extend({
 	logo_x=16,
 	go_time=0,
 	init=function(_ENV)
+		log("_init Game")
+		score.reset()
 		player=santa()
 		chunk()
 		local def = chunk.def[2]
 		def.sx=128
 		chunk(def)
 		global.speed=1
+		go_time=0
+		logo_x=16
 	end,
 
 	update=function(_ENV)
@@ -28,7 +32,12 @@ game_scene=scene:extend({
 			obj:destroy()
 		end)
 		score.adddistance()
-		if go_time != 0 and time()-go_time>=3 then
+		if player.is_dead and go_time == 0 then
+			go_time = time()
+		end
+		if go_time > 0 and time()-go_time>=3 then
+			log("game over")
+			scene:load(game_over_scene)
 		end
 	end,
 
@@ -37,9 +46,9 @@ game_scene=scene:extend({
 		add(entity.pool,del(entity.pool,player))
 		chunk:each("draw")
 		local gui = {
-			{strings.distance,score.getdistance(),0,0},
-			{strings.score,score.getpoints(),82,48},
-			{strings.coins,score.getcoins(),40,1},
+			{strings.DISTANCE,score.getdistance(),0,0},
+			{strings.SCORE,score.getpoints(),82,48},
+			{strings.COINS,score.getcoins(),40,1},
 		}
 		foreach(gui, function (i)
 			local label = i[1]
@@ -49,20 +58,14 @@ game_scene=scene:extend({
 			if(sprit != 0) then
 				spr(sprit, posit, 4 + locky)
 				posit+=10
-			end 
+			end
 			prints(value,posit,3+locky,7)
 			prints(label[language],posit,8+locky,6)
 		end)
 		entity:each("draw")
-		spr(128,logo_x,32+locky,12,3)
-		spr(16,logo_x-8,56+locky,14,2)
-		if(go_time > 0) then
-			for j=0,128,8 do
-				for i=0,128,8 do
-					spr(59, i, j+locky)
-					printc("game over", 64+locky, 7, true)
-				end
-			end
+		if(logo_x > -128) then
+			spr(128,logo_x,32+locky,12,3)
+			spr(16,logo_x-8,56+locky,14,2)
 		end
 	end,
 })

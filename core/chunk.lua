@@ -50,10 +50,10 @@ chunk=class:extend({
 			elseif odds > 0.95 then
 				sprite = 50
 				value = 500
-			elseif odds > 0.75 then
+			elseif odds > 0.85 then
 				sprite = 49
 				value = 250
-			elseif odds > 0.5 then
+			elseif odds > 0.7 then
 				sprite = 48
 				value = 100
 			end
@@ -62,7 +62,7 @@ chunk=class:extend({
 			end
 		end)
 		foreach(coins, function (b)
-			if not rnd_cb or rnd() > 0.50 then
+			if not rnd_cb or rnd() > 0.75 then
 				coin.block(b.w, b.h, sx+b.x,sy+b.y)
 			end
 		end)

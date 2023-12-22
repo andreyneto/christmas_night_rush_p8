@@ -12,8 +12,10 @@ title_scene=scene:extend({
 			call=noop
 		},
 		{
-			label=strings.leaderboard,
-			call=noop
+			label=strings.high_scores,
+			call=function()
+				scene:load(game_over_scene)
+			end
 		},
 		{
 			label=strings.language,

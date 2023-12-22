@@ -7,17 +7,32 @@ languages={
 	{"BR",9},
 }
 
+flags={
+	floor=0,
+	ceiling=1,
+	snow=2,
+	slip=3,
+}
+
 language=dget(0) == 0 and 1 or dget(0)
+high_score={dget(1),dget(2)}
+high_distance={dget(3),dget(4)}
+high_coins={dget(5),dget(6)}
+total_coins={dget(7),dget(8)}
 
 strings={
 	achievements={"achievements", "conquistas"},
 	language={"language", "idioma"},
-	leaderboard={"leaderboard", "placar"},
+	high_scores={"high scores", "recordes"},
 	start_game={"start game", "comecar"},
 	
-	score={"SCORE", "PONTOS"},
-	coins={"COINS", "MOEDAS"},
-	distance={"DISTANCE", "DISTANCIA"},
+	score={"score", "pontos"},
+	coins={"coins", "moedas"},
+	distance={"distance", "distancia"},
+	
+	SCORE={"SCORE", "PONTOS"},
+	COINS={"COINS", "MOEDAS"},
+	DISTANCE={"DISTANCE", "DISTANCIA"},
 }
 
 function log(str, override)
