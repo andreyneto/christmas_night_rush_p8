@@ -9,6 +9,7 @@ __lua__
 #include core/chunk.lua
 #include core/background.lua
 #include core/foreground.lua
+#include core/counter.lua
 #include core/entity.lua
 #include core/scene.lua
 #include core/utils.lua
@@ -21,6 +22,7 @@ __lua__
 
 #include scenes/game_scene.lua
 #include scenes/game_over_scene.lua
+#include scenes/hs_scene.lua
 #include scenes/title_scene.lua
 __gfx__
 0000000000aaaa00000aa000000aa000000aa0000077aa00000aa000000aa000000aa0003333aa1111aa33337171711888888888666666660077777777777700

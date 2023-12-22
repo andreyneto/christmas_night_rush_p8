@@ -46,21 +46,12 @@ game_scene=scene:extend({
 		add(entity.pool,del(entity.pool,player))
 		chunk:each("draw")
 		local gui = {
-			{strings.DISTANCE,score.getdistance(),0,0},
-			{strings.SCORE,score.getpoints(),82,48},
-			{strings.COINS,score.getcoins(),40,1},
+			{strings.DISTANCE,score.getdistance(),5},
+			{strings.SCORE,score.getpoints(),86,48},
+			{strings.COINS,score.getcoins(),42,1},
 		}
 		foreach(gui, function (i)
-			local label = i[1]
-			local value = i[2]
-			local posit = i[3] +4
-			local sprit = i[4]
-			if(sprit != 0) then
-				spr(sprit, posit, 4 + locky)
-				posit+=10
-			end
-			prints(value,posit,3+locky,7)
-			prints(label[language],posit,8+locky,6)
+			counterh(i[3],4+locky,i[1],i[2],i[4])
 		end)
 		entity:each("draw")
 		if(logo_x > -128) then

@@ -14,7 +14,7 @@ title_scene=scene:extend({
 		{
 			label=strings.high_scores,
 			call=function()
-				scene:load(game_over_scene)
+				scene:load(hs_scene)
 			end
 		},
 		{
@@ -55,6 +55,7 @@ title_scene=scene:extend({
 			if(i == #options) then
 			end
 		end
-		spr(languages[language][2], 4, 4, 2, 1)
+		spr(languages[language][2], 8, 8, 2, 1)
+		counterh(83,8,strings.COINS,score.gettcoins(),1)
 	end,
 })

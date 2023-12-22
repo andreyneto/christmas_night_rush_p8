@@ -42,10 +42,9 @@ game_over_scene=scene:extend({
 		else
 			printc("game over",32,7, true)
 		end
-		printc("score.........."..score.getpoints(),56,new_highscore and 10 or 7, true)
-		printc("distance......."..score.getdistance(),64,new_highdistance and 10 or 7, true)
-		printc("coins.........."..score.getcoins(),72,new_highcoins and 10 or 7, true)
-		print("🅾️ menu",8,112,7)
-		print("❎ play again",69,112,7)
+		printc(pad(strings.score[language], 15)..score.getpoints(),56,new_highscore and 10 or 7, true)
+		printc(pad(strings.distance[language], 15)..score.getdistance(),64,new_highdistance and 10 or 7, true)
+		printc(pad(strings.coins[language], 15)..score.getcoins(),72,new_highcoins and 10 or 7, true)
+		printc("🅾️ "..strings.menu[language].."   ".."❎ "..strings.play_again[language],112,7)
 	end,
 })

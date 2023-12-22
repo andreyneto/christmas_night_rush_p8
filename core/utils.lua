@@ -33,6 +33,10 @@ strings={
 	SCORE={"SCORE", "PONTOS"},
 	COINS={"COINS", "MOEDAS"},
 	DISTANCE={"DISTANCE", "DISTANCIA"},
+
+	back={"back", "voltar"},
+	menu={"main menu", "menu"},
+	play_again={"play again", "jogar novamente"},
 }
 
 function log(str, override)
@@ -69,4 +73,10 @@ end
 
 function rndb(min, max)
 	return flr(rnd(max - min + 1)) + min
+end
+
+function pad(str,len,char)
+	char=char or "."
+	if (#str==len) return str
+	return pad(str, len-1)..char
 end
