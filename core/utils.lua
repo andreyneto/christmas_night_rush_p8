@@ -37,6 +37,9 @@ strings={
 	back={"back", "voltar"},
 	menu={"main menu", "menu"},
 	play_again={"play again", "jogar novamente"},
+
+	new_high_score={"new high score","novo recorde"},
+	game_over={"game over","valeu natalina"}
 }
 
 function log(str, override)

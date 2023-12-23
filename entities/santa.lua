@@ -13,6 +13,7 @@ santa=entity:extend({
 	idle_offset={0,0},
 	run_sprite={66,68,70,64,72,74,76,64},
 	run_offset={1,2,0,0,1,2,0,0},
+	dead_sprite=105,
 
 	running=false,
 	jumping=false,
@@ -73,6 +74,7 @@ santa=entity:extend({
 			jump_time=7
 			if not just_landed and collide_map(_ENV,"down",flags.snow) then
 				just_landed = true
+				sfx(0)
 				for i=1, 16 do dust({
 					x=x+rnd(i),
 					y=y+4+12,
@@ -122,6 +124,10 @@ santa=entity:extend({
 	end,
 
 	update=function(_ENV)
+		if(is_dead) then
+			y+=2
+			return
+		end
 		if collide_map(_ENV,"down",flags.snow) then
 			global.friction = 0.5
 		elseif collide_map(_ENV,"down",flags.slip) then
@@ -177,7 +183,10 @@ santa=entity:extend({
 	draw=function(_ENV)
 		local s
 		local o
-		if(running) then
+		if(is_dead) then
+			s = dead_sprite
+			o = 0
+		elseif(running) then
 			s = run_sprite[sprite+1]
 			o = run_offset[sprite+1]
 		else
