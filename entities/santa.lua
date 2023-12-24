@@ -1,12 +1,12 @@
 santa=entity:extend({
 	x=32,
-	y=88,
+	y=80,
 	w=12,
 	h=16,
 	f=false,
 	y_offset=0,
 
-	anim=0,
+	anim=0, 
 	sprite=0,
 	offset=0,
 	idle_sprite={64,78},
@@ -16,7 +16,7 @@ santa=entity:extend({
 	dead_sprite=105,
 
 	running=false,
-	jumping=false,
+	jumping=true,
 	falling=false,
 	sliding=false,
 	landed=true,
@@ -49,6 +49,8 @@ santa=entity:extend({
 					frames=18+rnd(4),
 				}) end
 			end
+
+			sfx(6)
 			jump_strenght = jump_strenght_pulse - abs(horizontal_speed + mid(0,speed,3)) + horizontal_speed_max
 			landed = false
 			just_landed = false
@@ -74,7 +76,6 @@ santa=entity:extend({
 			jump_time=7
 			if not just_landed and collide_map(_ENV,"down",flags.snow) then
 				just_landed = true
-				sfx(0)
 				for i=1, 16 do dust({
 					x=x+rnd(i),
 					y=y+4+12,

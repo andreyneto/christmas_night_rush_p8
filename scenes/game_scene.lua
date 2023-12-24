@@ -1,6 +1,7 @@
 game_scene=scene:extend({
 	logo_x=16,
 	go_time=0,
+	latest_speed=16,
 	init=function(_ENV)
 		log("_init Game")
 		score.reset()
@@ -12,6 +13,7 @@ game_scene=scene:extend({
 		global.speed=1
 		go_time=0
 		logo_x=16
+		music(1)
 	end,
 
 	update=function(_ENV)
@@ -21,6 +23,7 @@ game_scene=scene:extend({
 		entity:each("animate")
 		coin:each("detect",player,function(obj)
 			obj:destroy()
+			sfx(5)
 			score.addcoin()
 			for i=1,4 do
 				obj:create_spark()
@@ -30,13 +33,17 @@ game_scene=scene:extend({
 			point_label({value=obj.value,x=obj.x,y=obj.y-8})
 			score.addpoints(obj.value)
 			obj:destroy()
+			sfx(9)
 		end)
 		score.adddistance()
 		if player.is_dead and go_time == 0 then
 			go_time = time()
+			music(-1)
+			sfx(10)
 		end
 		if go_time > 0 and time()-go_time>=3 then
 			log("game over")
+			music_speed=16
 			scene:load(game_over_scene)
 		end
 	end,

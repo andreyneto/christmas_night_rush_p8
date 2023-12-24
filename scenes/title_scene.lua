@@ -29,19 +29,23 @@ title_scene=scene:extend({
 	selected=1,
 
 	init=function(_ENV)
+		music(0)
 	end,
 
 	update=function(_ENV)
 		entity:each("update")
 		if btnp(⬇️) then
 			selected += 1
+			sfx(7)
 		end
 		if btnp(⬆️) then
 			selected -= 1
+			sfx(7)
 		end
 		selected=mid(1,selected,#options)
 		if btnp(❎) then
 			options[selected]:call()
+			sfx(8)
 		end
 	end,
 

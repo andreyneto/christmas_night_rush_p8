@@ -6,6 +6,24 @@ heart_count=50
 gravity=5
 friction=0.5
 speed=0.9
+music_speed=16
+
+function upmusicspeed()
+	if(speed > 2.4) then setmusicspeed(11)
+	elseif(speed > 2.1) then setmusicspeed(12)
+	elseif(speed > 1.8) then setmusicspeed(13)
+	elseif(speed > 1.5) then setmusicspeed(14)
+	elseif(speed > 1.2) then setmusicspeed(15) end
+end
+
+function setmusicspeed(value)
+	music_speed = value
+	poke(0x3200 + 68*0 + 65, music_speed)
+	poke(0x3200 + 68*1 + 65, music_speed)
+	poke(0x3200 + 68*2 + 65, music_speed)
+	poke(0x3200 + 68*3 + 65, music_speed)
+	poke(0x3200 + 68*4 + 65, music_speed)
+end
 
 --score
 score={
@@ -28,6 +46,7 @@ score={
 		if(score.coins[1] % 100 == 0 ) then
 			speed += 0.1
 			speed = mid(0, speed, 2.5)
+			upmusicspeed()
 		end
     end,
 	addpoints=function(value)
@@ -39,6 +58,7 @@ score={
 		if(score.points[1] % 100 == 0 ) then
 			speed += 0.1
 			speed = mid(0, speed, 2.5)
+			upmusicspeed()
 		end
     end,
     adddistance=function()
@@ -53,6 +73,7 @@ score={
 			if(score.distance[1] % 100 == 0 ) then
 				speed += 0.1
 				speed = mid(0, speed, 2.5)
+				upmusicspeed()
 			end
 		end
     end,

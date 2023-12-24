@@ -11,6 +11,7 @@ hs_scene=scene:extend({
 	update=function(_ENV)
 		if btnp(🅾️) then
 			scene:load(title_scene)
+			sfx(8)
 		end
 	end,
 
