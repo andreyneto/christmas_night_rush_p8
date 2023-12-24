@@ -24,6 +24,9 @@ gift=entity:extend({
     end,
     draw=function (_ENV)
         spr(sprite, x, y-oa[offset])
+		if value == 1000 and (t()*10)\1%8==0 then
+            create_spark(_ENV)
+        end
     end,
 	create_spark=function(_ENV)
 		spark({

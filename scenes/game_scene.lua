@@ -10,13 +10,16 @@ game_scene=scene:extend({
 		local def = chunk.def[2]
 		def.sx=128
 		chunk(def)
-		global.speed=1
+		global.speed=0
 		go_time=0
 		logo_x=16
 		music(1)
 	end,
 
 	update=function(_ENV)
+		if(global.speed == 0 and btnp(1)) then
+			global.speed = 1
+		end
 		logo_x-=speed
 		chunk:each("update")
 		entity:each("update")
