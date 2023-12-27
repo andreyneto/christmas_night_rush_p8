@@ -41,6 +41,7 @@ game_scene=scene:extend({
 		score.adddistance()
 		if player.is_dead and go_time == 0 then
 			go_time = time()
+			setmusicspeed(16)
 			music(-1)
 			sfx(10)
 		end
