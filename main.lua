@@ -87,16 +87,16 @@ score={
         return fill_number(flr(score.points[2]),3)..fill_number(flr(score.points[1]))
     end,
     gethcoins=function ()
-        return fill_number(flr(high_coins[2]),3)..fill_number(flr(high_coins[1]))
+        return fill_number(flr(high_coins()[2]),3)..fill_number(flr(high_coins()[1]))
     end,
     gethdistance=function ()
-        return fill_number(flr(high_distance[2]),3)..fill_number(flr(high_distance[1]))
+        return fill_number(flr(high_distance()[2]),3)..fill_number(flr(high_distance()[1]))
     end,
     gethpoints=function ()
-        return fill_number(flr(high_score[2]),3)..fill_number(flr(high_score[1]))
+        return fill_number(flr(high_score()[2]),3)..fill_number(flr(high_score()[1]))
     end,
     gettcoins=function ()
-        return fill_number(flr(total_coins[2]),3)..fill_number(flr(total_coins[1]))
+        return fill_number(flr(total_coins()[2]),3)..fill_number(flr(total_coins()[1]))
     end,
 }
 -- game loop

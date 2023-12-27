@@ -4,7 +4,7 @@ function counterh(x, y, label, value, sprite)
         x += 10
     end
     prints(value,x,y, 7)
-    prints(label[language],x,y+5, 6)
+    prints(label[language()],x,y+5, 6)
 end
 function counterv(y, label, value, s1, s2, s3)
 	local cs=64-(26)/2
@@ -15,5 +15,5 @@ function counterv(y, label, value, s1, s2, s3)
         y+=10
     end
     printc(value,y+1, 7, true)
-    printc(label[language],y+6, 6, true)
+    printc(label[language()],y+6, 6, true)
 end

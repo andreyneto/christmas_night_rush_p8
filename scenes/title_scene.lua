@@ -20,9 +20,9 @@ title_scene=scene:extend({
 		{
 			label=strings.language,
 			call=function()
-				if(language==1) then language = 2
-				else language = 1 end
-				dset(0, language)
+				local l = 1
+				if(language()==1) then l = 2 end
+				dset(0, l)
 			end
 		},
 	},
@@ -55,11 +55,11 @@ title_scene=scene:extend({
 		local p = 64+((64-(#options*8))/2)-8
 		for i=1, #options do
 			local is_selected = i==selected
-			printc((is_selected and "> " or "")..options[i].label[language]..(is_selected and " <" or ""), p+(8*i), options[i].call == noop and 6 or is_selected and 10 or 7, is_selected)
+			printc((is_selected and "> " or "")..options[i].label[language()]..(is_selected and " <" or ""), p+(8*i), options[i].call == noop and 6 or is_selected and 10 or 7, is_selected)
 			if(i == #options) then
 			end
 		end
-		spr(languages[language][2], 8, 8, 2, 1)
+		spr(languages[language()][2], 8, 8, 2, 1)
 		counterh(83,8,strings.COINS,score.gettcoins(),1)
 	end,
 })

@@ -14,12 +14,14 @@ flags={
 	slip=3,
 }
 
-language=dget(0) == 0 and 1 or dget(0)
-high_score={dget(1),dget(2)}
-high_distance={dget(3),dget(4)}
-high_coins={dget(5),dget(6)}
-total_coins={dget(7),dget(8)}
-
+function language()
+	return dget(0) == 0 and 1 or dget(0)
+end
+function high_score() return {dget(1),dget(2)} end
+function high_distance() return {dget(3),dget(4)} end
+function high_coins() return {dget(5),dget(6)} end
+function total_coins() return {dget(7),dget(8)} end
+			
 strings={
 	achievements={"achievements", "conquistas"},
 	language={"language", "idioma"},
