@@ -125,10 +125,14 @@ santa=entity:extend({
 	end,
 
 	update=function(_ENV)
-		if(is_dead) then
-			y+=2
-			return
+		if is_dead then
+			if (scene.current.go_time > 0 and time()-scene.current.go_time>=1.6) then
+				y+=4
+			elseif y>88 then
+				y-=2
+			end
 		end
+		if (is_dead) return
 		if collide_map(_ENV,"down",flags.snow) then
 			global.friction = 0.5
 		elseif collide_map(_ENV,"down",flags.slip) then

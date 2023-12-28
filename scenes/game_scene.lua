@@ -17,7 +17,7 @@ game_scene=scene:extend({
 	end,
 
 	update=function(_ENV)
-		if(global.speed == 0 and btnp(1)) then
+		if(global.speed == 0 and btnp(1) and not player.is_dead) then
 			global.speed = 1
 		end
 		logo_x-=speed
