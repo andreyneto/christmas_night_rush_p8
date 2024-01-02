@@ -105,12 +105,15 @@ function _init()
 	scene:load(title_scene)
 	log("_init", true)
 	foreground:init()
+	achievement_manager:init()
 end
 
 function _update()
 	background:update()
 	scene.current:update()
 	foreground:update()
+	achievement_badge:each("update")
+	achievement_manager:update()
 end
 
 function _draw()
@@ -120,4 +123,5 @@ function _draw()
 	background:draw()
 	scene.current:draw()
 	foreground:draw()
+	achievement_badge:draw_first()
 end

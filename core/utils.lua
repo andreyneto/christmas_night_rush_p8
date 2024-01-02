@@ -21,6 +21,9 @@ function high_score() return {dget(1),dget(2)} end
 function high_distance() return {dget(3),dget(4)} end
 function high_coins() return {dget(5),dget(6)} end
 function total_coins() return {dget(7),dget(8)} end
+function total_distance() return {dget(9),dget(10)} end
+function total_score() return {dget(11),dget(12)} end
+function current_coins() return {dget(13),dget(14)} end
 			
 strings={
 	achievements={"achievements", "conquistas"},
@@ -41,7 +44,8 @@ strings={
 	play_again={"play again", "jogar novamente"},
 
 	new_high_score={"new high score","novo recorde"},
-	game_over={"game over","valeu natalina"}
+	game_over={"game over","valeu natalina"},
+	achievement_unlocked={"ACHIEVEMENT UNLOCKED","CONQUISTA DESBLOQUEADA"}
 }
 
 function log(str, override)

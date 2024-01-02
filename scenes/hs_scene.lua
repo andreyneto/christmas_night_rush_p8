@@ -1,12 +1,5 @@
 hs_scene=scene:extend({
-	gui={},
-	init=function(_ENV)
-		gui = {
-			{strings.distance,score.getdistance(),0,0},
-			{strings.score,score.getpoints(),82,48},
-			{strings.coins,score.getcoins(),40,1},
-		}
-	end,
+	init=noop,
 
 	update=function(_ENV)
 		if btnp(🅾️) then

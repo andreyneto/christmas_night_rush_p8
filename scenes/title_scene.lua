@@ -9,7 +9,9 @@ title_scene=scene:extend({
 		},
 		{
 			label=strings.achievements,
-			call=noop
+			call=function()
+				scene:load(achievements_scene)
+			end
 		},
 		{
 			label=strings.high_scores,
