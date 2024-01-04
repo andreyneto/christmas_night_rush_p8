@@ -12,22 +12,21 @@ game_over_scene=scene:extend({
 		high_score = high_score()
 		high_distance = high_distance()
 		high_coins = high_coins()
-		new_highscore = score.points[2] >= high_score[2] and score.points[1] > high_score[1]
-		new_highcoins = score.coins[2] >= high_coins[2] and score.coins[1] > high_coins[1]
-		new_highdistance = score.distance[2] >= high_distance[2] and score.distance[1] > high_distance[1]
-		if new_highscore then dset(1, score.points[1]) dset(2, score.points[2]) end
-		if new_highcoins then dset(5, score.coins[1]) dset(6, score.coins[2]) end
-		if new_highdistance then dset(3, score.distance[1]) dset(4, score.distance[2]) end
+		new_highscore = score.points > high_score
+		new_highcoins = score.coins > high_coins
+		new_highdistance = score.distance > high_distance
+		if new_highscore then dset(1, score.points) end
+		if new_highcoins then dset(3, score.coins) end
+		if new_highdistance then dset(2, score.distance) end
 		local total = total_coins()
-		for i=0,score.coins[2] do
-			total[2] += i
+		for i=1,score.coins do
+			total[2] += 1
 			if(total[2] == 10000) then
 				total[1]+=1
 				total[2]=0
 			end
 		end
-		total[1] += score.coins[1]
-		dset(7,total[1]) dset(8, total[2])
+		dset(4,total[1]) dset(5, total[2])
 	end,
 -- 5050 73 30
 	update=function(_ENV)

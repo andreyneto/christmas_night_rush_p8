@@ -9,6 +9,8 @@ speed=0.9
 music_speed=16
 
 function upmusicspeed()
+	speed += 0.1
+	speed = mid(0, speed, 2.5)
 	if(speed > 2.4) then setmusicspeed(11)
 	elseif(speed > 2.1) then setmusicspeed(12)
 	elseif(speed > 1.8) then setmusicspeed(13)
@@ -27,76 +29,64 @@ end
 
 --score
 score={
-	distance={0,0},
-    points={0,0},
-    coins={0,0},
+	distance=0,
+    points=0,
+    coins=0,
 	steps=0,
 	reset=function()
-		score.distance={0,0}
-		score.points={0,0}
-		score.coins={0,0}
+		score.distance=0
+		score.points=0
+		score.coins=0
 		score.steps=0
 	end,
 	addcoin=function()
-        score.coins[1] += 1
-		if(score.coins[1]>=9999) then
-			score.coins[1] = 0
-			score.coins[2] += 1
+		if score.coins < 32767 then
+        	score.coins += 1
 		end
-		if(score.coins[1] % 100 == 0 ) then
-			speed += 0.1
-			speed = mid(0, speed, 2.5)
+		if(score.coins % 100 == 0 ) then
 			upmusicspeed()
 		end
     end,
 	addpoints=function(value)
-        score.points[1] += value or 0
-		if(score.points[1]>=9999) then
-			score.points[1] = 0
-			score.points[2] += 1
+		if score.points < 32767 then
+        	score.points += value or 0
 		end
-		if(score.points[1] % 100 == 0 ) then
-			speed += 0.1
-			speed = mid(0, speed, 2.5)
+		if(score.points % 100 == 0 ) then
 			upmusicspeed()
 		end
     end,
     adddistance=function()
-		score.steps+=speed
-		if score.steps >= 8 then
-			score.steps = 0
-			score.distance[1] += speed
-			if(score.distance[1]>=9999) then
-				score.distance[1] = 0
-				score.distance[2] += 1
-			end
-			if(score.distance[1] % 100 == 0 ) then
-				speed += 0.1
-				speed = mid(0, speed, 2.5)
-				upmusicspeed()
+		if score.distance < 32767 then
+			score.steps+=speed
+			if score.steps >= 8 then
+				score.steps = 0
+				score.distance += speed
+				if(score.distance % 100 == 0 ) then
+					upmusicspeed()
+				end
 			end
 		end
     end,
     getcoins=function ()
-        return fill_number(flr(score.coins[2]),3)..fill_number(flr(score.coins[1]))
+        return fill_number(flr(score.coins))
     end,
     getdistance=function ()
-        return fill_number(flr(score.distance[2]),3)..fill_number(flr(score.distance[1]))
+        return fill_number(flr(score.distance))
     end,
     getpoints=function ()
-        return fill_number(flr(score.points[2]),3)..fill_number(flr(score.points[1]))
+        return fill_number(flr(score.points))
     end,
     gethcoins=function ()
-        return fill_number(flr(high_coins()[2]),3)..fill_number(flr(high_coins()[1]))
+        return fill_number(flr(high_coins()))
     end,
     gethdistance=function ()
-        return fill_number(flr(high_distance()[2]),3)..fill_number(flr(high_distance()[1]))
+        return fill_number(flr(high_distance()))
     end,
     gethpoints=function ()
-        return fill_number(flr(high_score()[2]),3)..fill_number(flr(high_score()[1]))
+        return fill_number(flr(high_score()))
     end,
     gettcoins=function ()
-        return fill_number(flr(total_coins()[2]),3)..fill_number(flr(total_coins()[1]))
+        return fill_number(flr(total_coins()[1]),3)..fill_number(flr(total_coins()[2]),4)
     end,
 }
 -- game loop

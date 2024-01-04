@@ -1,4 +1,4 @@
-cartdata("xmas_nigth_rush_b")
+cartdata("xmas_nigth_rush_f")
 global=_ENV
 noop=function()end
 
@@ -17,13 +17,13 @@ flags={
 function language()
 	return dget(0) == 0 and 1 or dget(0)
 end
-function high_score() return {dget(1),dget(2)} end
-function high_distance() return {dget(3),dget(4)} end
-function high_coins() return {dget(5),dget(6)} end
-function total_coins() return {dget(7),dget(8)} end
-function total_distance() return {dget(9),dget(10)} end
-function total_score() return {dget(11),dget(12)} end
-function current_coins() return {dget(13),dget(14)} end
+function high_score() return dget(1) end
+function high_distance() return dget(2) end
+function high_coins() return dget(3) end
+function total_coins() return {dget(4),dget(5)} end
+function total_distance() return {dget(6),dget(7)} end
+function total_score() return {dget(8),dget(9)} end
+function current_coins() return {dget(10),dget(11)} end
 			
 strings={
 	achievements={"achievements", "conquistas"},
@@ -73,7 +73,7 @@ end
 function fill_number(number, limit)
     local numberString = "" .. number
 	
-    while #numberString < (limit or 4) do
+    while #numberString < (limit or 5) do
         numberString = "0" .. numberString
     end
 
