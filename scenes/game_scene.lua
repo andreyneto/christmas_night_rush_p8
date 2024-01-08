@@ -17,13 +17,20 @@ game_scene=scene:extend({
 	end,
 
 	update=function(_ENV)
+		-- if(btnp(4)) achievement_badge({label="012345678901234567890123456789"})
 		if(global.speed == 0 and btnp(1) and not player.is_dead) then
 			global.speed = 1
 		end
+		if(#snowball.pool == 0 and global.speed >= 1.2) snowball({x=130,y=mid(16,rnd(16)*16,80)})
 		logo_x-=speed
 		chunk:each("update")
 		entity:each("update")
 		entity:each("animate")
+		snowball:each("detect",player,function(obj)
+			player.is_dead = true
+			global.speed = 0
+			obj.spd = 0
+		end)
 		coin:each("detect",player,function(obj)
 			obj:destroy()
 			sfx(5)

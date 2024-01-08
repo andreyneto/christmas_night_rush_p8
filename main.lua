@@ -8,7 +8,7 @@ friction=0.5
 speed=0.9
 music_speed=16
 
-function upmusicspeed()
+function increase_speed()
 	speed += 0.1
 	speed = mid(0, speed, 2.5)
 	if(speed > 2.4) then setmusicspeed(11)
@@ -44,7 +44,7 @@ score={
         	score.coins += 1
 		end
 		if(score.coins % 100 == 0 ) then
-			upmusicspeed()
+			increase_speed()
 		end
     end,
 	addpoints=function(value)
@@ -52,7 +52,7 @@ score={
         	score.points += value or 0
 		end
 		if(score.points % 100 == 0 ) then
-			upmusicspeed()
+			increase_speed()
 		end
     end,
     adddistance=function()
@@ -62,7 +62,7 @@ score={
 				score.steps = 0
 				score.distance += speed
 				if(score.distance % 100 == 0 ) then
-					upmusicspeed()
+					increase_speed()
 				end
 			end
 		end
